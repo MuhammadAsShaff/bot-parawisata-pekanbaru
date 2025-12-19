@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-gemini-bg: #131314;
+  --color-gemini-sidebar: #1e1f20;
+  --color-gemini-hover: #282a2c;
+  --color-gemini-border: #444746;
+  --color-gemini-text: #e3e3e3;
+  --color-gemini-text-muted: #c4c7c5;
+  --color-gemini-accent: #004a77;
+  --color-gemini-blue: #4285f4;
+  --color-gemini-purple: #9b72cb;
+  --color-gemini-red: #d96570;
+  
+  --font-sans: 'Google Sans', 'Inter', 'Roboto', sans-serif;
+}
+
+:global(body) {
+  background-color: var(--color-gemini-bg);
+  color: var(--color-gemini-text);
+  margin: 0;
+  font-family: var(--font-sans);
+  overflow: hidden; 
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #4285f4, #9b72cb, #d96570);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+/* Global Scrollbar Utilities */
+.scrollbar-custom {
+  scrollbar-width: thin;
+  scrollbar-color: #444746 transparent;
+}
+.scrollbar-custom::-webkit-scrollbar {
+  width: 6px;
+}
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  background-color: #444746;
+  border-radius: 20px;
+}
+.scrollbar-custom::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Microphone Pulse Animation */
+@keyframes mic-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(138, 180, 248, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(138, 180, 248, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(138, 180, 248, 0);
+  }
+}
+
+.mic-active {
+  animation: mic-pulse 1.5s infinite;
+  background-color: #3c4043 !important; /* Lighter background when active */
+  color: #8ab4f8 !important; /* Blue icon color */
+}

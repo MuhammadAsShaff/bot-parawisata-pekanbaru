@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4285f4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#9b72cb;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background Circle -->
+  <circle cx="50" cy="50" r="45" fill="url(#grad)" />
+  
+  <!-- Robot Face -->
+  <rect x="30" y="40" width="40" height="30" rx="5" fill="#ffffff" />
+  
+  <!-- Eyes -->
+  <circle cx="40" cy="52" r="4" fill="#131314" />
+  <circle cx="60" cy="52" r="4" fill="#131314" />
+  
+  <!-- Mouth (Smile) -->
+  <path d="M 45 60 Q 50 65 55 60" stroke="#131314" stroke-width="2" fill="none" />
+  
+  <!-- Antenna -->
+  <line x1="50" y1="40" x2="50" y2="30" stroke="#ffffff" stroke-width="3" />
+  <circle cx="50" cy="27" r="3" fill="#ffffff" />
+  
+  <!-- Chef Hat -->
+  <path d="M35 32 Q 30 20 40 15 Q 50 5 60 15 Q 70 20 65 32 Z" fill="#ffffff" />
+</svg>
