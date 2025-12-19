@@ -1,18 +1,16 @@
 
 import { pipeline, env } from '@xenova/transformers';
 
-// Configuration to load models from LOCAL project files (public/models)
+// Configuration to load models from CDN (HuggingFace)
 env.allowLocalModels = false;
-env.allowRemoteModels = true; // Treats local server as remote in browser context
-env.remoteHost = '/models/'; // Points to http://localhost:PORT/models/
-env.remotePathTemplate = '{model}/'; // Expected structure: /models/Xenova/whisper-base/...
+env.useBrowserCache = true;
 
 class WhisperWorker {
   static instance = null;
 
   static async getInstance(progressCallback) {
     if (this.instance === null) {
-      // Load from local folder: public/models/Xenova/whisper-base
+      // Load from HuggingFace Hub (Online)
       this.instance = await pipeline('automatic-speech-recognition', 'Xenova/whisper-base', { 
         quantized: true,
         progress_callback: progressCallback 
@@ -27,7 +25,7 @@ self.addEventListener('message', async (event) => {
 
   if (type === 'load') {
       try {
-          self.postMessage({ status: 'loading', message: 'Memuat model Whisper Base (Local Project)...' });
+          self.postMessage({ status: 'loading', message: 'Mengunduh model Whisper Base (Online CDN)...' });
           
           await WhisperWorker.getInstance((data) => {
               // Relay download progress

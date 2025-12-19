@@ -87,8 +87,8 @@
     loadVoices();
     if ('speechSynthesis' in window) speechSynthesis.onvoiceschanged = loadVoices;
 
-    // Initialize Whisper Worker with cache burst to load new tuned config
-    whisperWorker = new Worker(new URL('./lib/whisper-worker.js?v=tuned_final', import.meta.url), { type: 'module' });
+    // Initialize Whisper Worker with cache burst to load new online config
+    whisperWorker = new Worker(new URL('./lib/whisper-worker.js?v=online_final', import.meta.url), { type: 'module' });
     
     whisperWorker.onmessage = (e) => {
         const { status, message, text } = e.data;
