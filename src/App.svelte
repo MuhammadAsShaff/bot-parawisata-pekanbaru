@@ -79,6 +79,9 @@
   let audioInput = null;
   let processor = null;
   let audioChunks = [];
+  let isModelReady = false;
+  let isModelLoading = false;
+  let pendingRecording = false;
 
   onMount(() => {
      if (window.innerWidth < 768) isSidebarOpen = false;
@@ -97,6 +100,12 @@
         } else if (status === 'ready') {
             statusMessage = ''; // Ready silently
             console.log('Whisper Ready');
+            isModelReady = true;
+            isModelLoading = false;
+            if (pendingRecording) {
+                pendingRecording = false;
+                startRecording();
+            }
         } else if (status === 'downloading') {
             const { detail } = e.data;
             if (detail && detail.progress) {
@@ -121,8 +130,8 @@
         }
     };
     
-    // Trigger load immediately
-    whisperWorker.postMessage({ type: 'load' });
+    // Lazy Load: Do NOT trigger load immediately
+    // whisperWorker.postMessage({ type: 'load' });
 
     return () => {
         if (whisperWorker) whisperWorker.terminate();
@@ -283,6 +292,16 @@
     if (isRecording) {
         stopRecording();
     } else {
+        if (!isModelReady) {
+            if (!isModelLoading) {
+                isModelLoading = true;
+                pendingRecording = true;
+                whisperWorker.postMessage({ type: 'load' });
+            } else {
+                statusMessage = '⏳ Sedang memuat model...';
+            }
+            return;
+        }
         startRecording();
     }
   }
@@ -394,6 +413,24 @@
 
   <div slot="header">
     <Header onToggleSidebar={toggleSidebar} {isSidebarOpen} />
+    
+    <!-- Dynamic Island Status -->
+    {#if statusMessage}
+    <div class="fixed left-1/2 transform -translate-x-1/2 z-50 animate-bounce-in top-[env(safe-area-inset-top)] mt-6">
+        <div class="bg-black/80 backdrop-blur-md text-white px-6 py-2 rounded-full shadow-2xl flex items-center gap-3 border border-white/10 min-w-[200px] justify-center transition-all duration-300">
+           <!-- Spinner or Icon based on message -->
+           {#if statusMessage.includes('memuat') || statusMessage.includes('Mengunduh')}
+               <div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+           {:else if statusMessage.includes('Merekam')}
+               <div class="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+           {:else if statusMessage.includes('Menganalisis')}
+               <div class="w-4 h-4 text-xs">✨</div>
+           {/if}
+           
+           <span class="text-xs font-medium tracking-wide">{statusMessage}</span>
+        </div>
+    </div>
+    {/if}
   </div>
 
   <div slot="chat-window" style="height: 100%;">
@@ -413,8 +450,5 @@
       onSend={handleSend}
       onToggleListening={toggleListening}
     />
-    {#if statusMessage}
-      <div class="text-center text-xs text-gemini-red mt-1">{statusMessage}</div>
-    {/if}
   </div>
 </MainLayout>
