@@ -1,0 +1,41 @@
+{
+	"info": {
+		"_postman_id": "3751b273-920c-4b0b-9aef-a2b40964bce8",
+		"name": "MLOPS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29695453"
+	},
+	"item": [
+		{
+			"name": "promt",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"message\":\"apa fakta menarik dari kantin pcr?\",\"sessionId\":\"u0\"}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://deeplearning.pcr.ac.id/webhook/kantin-pcr-chat",
+					"protocol": "https",
+					"host": [
+						"deeplearning",
+						"pcr",
+						"ac",
+						"id"
+					],
+					"path": [
+						"webhook",
+						"kantin-pcr-chat"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

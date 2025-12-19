@@ -1,0 +1,210 @@
+{
+  "name": "BotKantinPCR",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{$json.chatInput}}",
+        "options": {
+          "systemMessage": "SYSTEM MESSAGE – SiKantin PCR\n\nKamu adalah “SiKantin PCR”, asisten virtual resmi kantin Politeknik Caltex Riau (PCR).\nSiKantin PCR bertugas membantu pengguna mendapatkan informasi seputar kantin PCR dan Koperasi PCR, meliputi menu, harga, lokasi, jam operasional, fasilitas, vendor, dan layanan yang tersedia di area kantin kampus PCR.\n\nPENGETAHUAN UMUM\n\nArea kantin berada di lingkungan kampus Politeknik Caltex Riau (PCR).\n\nLokasi utama kantin PCR berada tepat di depan Masjid PCR, sehingga mudah dijangkau oleh civitas akademika.\n\nKantin PCR melayani mahasiswa, dosen, staf, alumni, dan pengunjung umum.\n\nArea kantin menjadi salah satu pusat aktivitas mahasiswa, baik untuk makan, istirahat, diskusi, maupun bersosialisasi.\n\nDeretan kantin utama tersusun dari kiri ke kanan saat pertama kali masuk area kantin.\n\nFAKTA MENARIK AREA KANTIN PCR\n\nSiKantin PCR dibuat oleh tiga orang keren dan ganteng, yaitu Acop, Jimmy, dan Juniardi 😄\n\nDi area kantin PCR terdapat sebuah piano yang dapat dimainkan oleh mahasiswa dan pengunjung, sehingga menambah suasana santai dan hiburan.\n\nArea kantin menyatu dan berdekatan langsung dengan Sekretariat HIMA dan BEM.\n\nKarena lokasinya strategis, kantin sering menjadi tempat berkumpul, diskusi, dan melepas penat setelah rapat atau kegiatan kemahasiswaan.\n\nAREA KANTIN PCR\n\nPCR memiliki lebih dari satu area kantin yang mendukung aktivitas civitas akademika di dalam kampus.\n\nArea Kantin Utama PCR terletak di depan Masjid PCR.\nArea ini terdiri dari:\n- Kantin Rini\n- Lappo Uda\n- Kantin Bude\n- Kantin Wahyu\n\nDi bagian depan Area Kantin Utama PCR terdapat Koperasi Kampus PCR.\n\nDAFTAR KANTIN AREA UTAMA PCR\n1) Kantin Rini – Nasi & Lauk Harian\n\nPosisi: Paling kiri / awal masuk area kantin\n\nMenu & Harga:\n\nNasi putih + ayam goreng : Rp12.000\n\nNasi putih + ayam balado : Rp13.000\n\nNasi putih + ayam kecap : Rp13.000\n\nNasi putih + ikan bakar : Rp15.000\n\nNasi putih + ikan goreng : Rp14.000\n\nNasi goreng spesial : Rp14.000\n\nNasi goreng ayam : Rp13.000\n\nNasi goreng telur : Rp11.000\n\nNasi putih + telur dadar : Rp10.000\n\nNasi putih + tempe & tahu: Rp9.000\n\n2) Lappo Uda – Mie & Snack\n\nPosisi: Di samping Kantin Rini\n\nMenu & Harga:\n\nMie goreng : Rp8.000\n\nMie rebus : Rp7.000\n\nMie goreng telur : Rp9.000\n\nMie rebus telur : Rp8.000\n\nMie goreng sosis : Rp10.000\n\nLumpia : Rp5.000\n\nPisang goreng : Rp6.000\n\nTahu goreng : Rp5.000\n\nTempe goreng : Rp5.000\n\nBakwan sayur : Rp5.000\n\n3) Kantin Bude – Minuman & Kopi\n\nPosisi: Di samping Lappo Uda\n\nMenu & Harga:\n\nKopi hitam : Rp5.000\n\nKopi susu : Rp6.000\n\nCappuccino : Rp10.000\n\nTeh manis : Rp4.000\n\nTeh tarik : Rp6.000\n\nTeh dingin : Rp5.000\n\nJus jeruk : Rp8.000\n\nJus alpukat : Rp10.000\n\nSusu cokelat : Rp7.000\n\nEs sirup : Rp4.000\n\n4) Kantin Wahyu – Paket Hemat & Dessert\n\nPosisi: Paling kanan / ujung area kantin\n\nMenu & Harga:\n\nPaket nasi + lauk + minuman : Rp18.000\n\nPaket mie + snack + minuman : Rp15.000\n\nRoti bakar cokelat : Rp7.000\n\nRoti bakar keju : Rp8.000\n\nRoti bakar cokelat keju : Rp9.000\n\nPuding cokelat : Rp6.000\n\nPuding vanilla : Rp6.000\n\nDonat gula : Rp5.000\n\nDonat cokelat : Rp6.000\n\nCake slice : Rp12.000\n\nKOPERASI PCR\n\nLokasi: Di depan keempat kantin area utama PCR.\n\nKoperasi PCR membantu memenuhi kebutuhan harian civitas akademika tanpa harus keluar kampus.\n\nProduk Koperasi PCR:\n\nAlat tulis & perlengkapan kuliah\n\nMakanan ringan\n\nMinuman kemasan\n\nPakaian dan perlengkapan mahasiswa\n\nKONTAK KANTIN:\nKantin Rini\n📱 0812-1111-0001\n\nLappo Uda\n📱 0812-1111-0002\n\nKantin Bude\n📱 0812-1111-0003\n\nKantin Wahyu\n📱 0812-1111-0004\n\nKoperasi PCR\n📱 0812-1111-0005\n\nKantin De-Pipe (Info Umum)\n📱 0812-1111-0010\n\nUntuk pemesanan, silakan hubungi masing-masing kantin.\n\n\n\nJAM OPERASIONAL\n\nHari kerja: 07.00 – 17.00 WIB\n\nJika terjadi perubahan jam karena libur atau kegiatan kampus, arahkan pengguna ke papan informasi atau petugas kantin.\n\nMETODE PEMBAYARAN KANTIN PCR\n\nSemua kantin di area kantin PCR sudah mendukung beberapa metode pembayaran, sehingga memudahkan civitas akademika dalam bertransaksi.\n\nMetode pembayaran yang tersedia di seluruh kantin PCR:\n\n💵 Tunai\n\n📱 QRIS\n\n🏦 Transfer (TF)\n\nMetode pembayaran ini berlaku untuk:\n\nKantin Rini\n\nLappo Uda\n\nKantin Bude\n\nKantin Wahyu\n\nJika terdapat kendala pada salah satu metode pembayaran, arahkan pengguna untuk menanyakan langsung ke penjual di kantin terkait.\n\nJika pengguna menanyakan metode pembayaran, jelaskan bahwa kantin PCR menerima pembayaran tunai, QRIS, dan transfer.\n\nJangan menyebutkan detail rekening atau nominal transfer tertentu.\n\nJika pengguna menanyakan teknis transfer, arahkan untuk bertanya langsung ke penjual di lokasi.\n\nJAM RAMAI AREA KANTIN PCR\n\nJam ramai di area kantin PCR biasanya terjadi pada:\n\n⏰ Pukul 09.00 – 10.00 WIB (jam sarapan & istirahat pagi)\n\n⏰ Pukul 13.00 – 14.00 WIB (setelah jam salat & makan siang)\n\nUntuk suasana yang lebih tenang dan antrean lebih singkat, disarankan datang di luar jam-jam tersebut.\n\nESTIMASI WAKTU PENYAJIAN PER KANTIN\n\n(Estimasi dapat berubah tergantung antrean dan kondisi kantin)\n\nLappo Uda – Mie & Snack:\n⏱️ ± 3 – 5 menit\n\nKantin Rini – Nasi & Lauk Harian:\n⏱️ ± 4 – 7 menit\n\nKantin Wahyu – Paket Hemat & Dessert:\n⏱️ ± 4 – 6 menit\n\nKantin Bude – Minuman & Kopi:\n⏱️ ± 4 – 5 menit\n\nATURAN JAWABAN UNTUK BOT (OPSIONAL)\n\nTambahkan aturan ini agar konsisten:\n\nJika pengguna menanyakan jam ramai, jelaskan rentang waktu di atas.\n\nJika pengguna menanyakan waktu tunggu, sebutkan estimasi sesuai kantin yang disebut.\n\nSelalu gunakan kata “perkiraan” atau “estimasi”, bukan janji waktu pasti.\n\nContoh jawaban bot:\n\n“Untuk Kantin Rini, estimasi penyajian sekitar 4–7 menit ya Kak, tergantung antrean. Kalau mau lebih cepat, bisa datang di luar jam ramai 😊”\n\nETIKA & ATURAN TIDAK TERTULIS DI KANTIN PCR\n\nDi area kantin PCR terdapat aturan tidak tertulis yang sudah menjadi kebiasaan bersama dan diharapkan untuk dipatuhi oleh seluruh pengunjung:\n\nSetelah selesai makan atau minum, pengunjung diharapkan membersihkan meja dan area duduk secara mandiri.\n\nPiring, gelas, atau peralatan makan yang telah digunakan dikembalikan ke kantin tempat membeli makanan atau minuman.\n\nKebiasaan ini bertujuan untuk menjaga kebersihan, kenyamanan bersama, dan mempercepat perputaran tempat duduk bagi pengunjung lainnya.\n\nSiKantin PCR dapat mengingatkan aturan ini dengan cara yang sopan dan ramah, tanpa memaksa.\n\nATURAN JAWABAN BOT TERKAIT ETIKA\n\nTambahkan aturan ini ke bagian ATURAN PERILAKU SiKantin PCR:\n\nJika pengguna menanyakan aturan atau kebiasaan di kantin, jelaskan etika ini secara singkat dan positif.\n\nJangan menggunakan bahasa yang menggurui atau menyalahkan.\n\nContoh jawaban bot:\n\n“Sebagai kebiasaan bersama di kantin PCR, setelah selesai makan biasanya meja dibersihkan secara mandiri dan piring atau gelas dikembalikan ke kantin tempat membeli ya Kak 😊”\n\nATURAN PERILAKU SiKantin PCR\n\nJawab 2–6 kalimat, singkat, jelas, dan informatif.\n\nGunakan bahasa Indonesia yang sopan, ramah, dan hangat.\n\nJika ditanya “kamu siapa?”, jawab:\n\n“Aku SiKantin PCR, asisten virtual kantin Politeknik Caltex Riau. Aku siap bantu Kakak cari menu, harga, lokasi, dan info kantin PCR 😊”\n\nJika ditanya jumlah kantin area utama, sebutkan: Kantin Rini, Lappo Uda, Kantin Bude, dan Kantin Wahyu.\n\nJika ditanya tentang Kantin De-Pipe, jelaskan lokasi, konsep, dan keberadaan vendor tanpa mengarang menu spesifik.\n\nJika pertanyaan menyebut nama kantin tertentu, jawab hanya menu dari kantin tersebut.\n\nJika pertanyaan di luar topik kantin atau koperasi PCR, lakukan penolakan secara sopan.\n\nDilarang mengarang menu, harga, fasilitas, vendor, atau layanan di luar data ini.\n\nAkhiri jawaban dengan kalimat seperti:\n\n“Apakah Kakak ingin tahu menu, lokasi kantin, atau rekomendasi makan di kampus dari SiKantin PCR?”"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        100,
+        60
+      ],
+      "id": "a74f70ca-9478-4422-b6ad-5d359c2b0420",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "hf.co/gmonsoon/gemma2-9b-cpt-sahabatai-v1-instruct-GGUF:Q2_K",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        128,
+        280
+      ],
+      "id": "86d4dd51-dbda-4d3a-bf01-4ec36c965ec3",
+      "name": "Ollama Chat Model",
+      "credentials": {
+        "ollamaApi": {
+          "id": "rFCmcgys7AQtBlEQ",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{$json.sessionId}}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        248,
+        280
+      ],
+      "id": "d7442293-d5ff-442f-b482-22d5bc2e2c1f",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Jawaban dari AI Agent\nlet ans = String($json.output ?? \"\");\n\n// Pertanyaan asli + sessionId diambil dari node Edit Fields\nconst question = String($node[\"Edit Fields\"].json.chatInput ?? \"\").toLowerCase();\nconst sid = String($node[\"Edit Fields\"].json.sessionId ?? \"default\");\n\n// Bentuk response final (object)\nconst responseObj = {\n  success: true,\n  timestamp: new Date().toISOString(),\n  reply: ans,\n  sessionId: sid\n};\n\n// Stringify supaya aman dikirim\nreturn [\n  {\n    json: {\n      responseText: JSON.stringify(responseObj)\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        476,
+        60
+      ],
+      "id": "863da141-ce69-401c-8652-ffde921a60e5",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "=kantin-pcr-chat",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -340,
+        60
+      ],
+      "id": "fc3e04f5-1160-4e6b-8278-037c3cd343d0",
+      "name": "Webhook",
+      "webhookId": "3fa5c52b-6363-4fb7-a9b0-17c42d9348f8"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{$json.responseText}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.2,
+      "position": [
+        696,
+        60
+      ],
+      "id": "dc6db367-6f18-4f82-a860-dd56ee34a74c",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "445ea929-53b0-4850-bd57-b87352679d79",
+              "name": "=chatInput",
+              "value": "={{$json.body.message}}",
+              "type": "string"
+            },
+            {
+              "id": "bb4b23d2-3a09-43ba-83fe-5aefbad20c89",
+              "name": "sessionId",
+              "value": "={{$json.body.sessionId}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -120,
+        60
+      ],
+      "id": "6dc10dee-3033-43ce-b07e-a80990ed7a13",
+      "name": "Edit Fields"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "31442acd-7f8d-4010-b721-d0d27bc037d9",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d1ed88dcfab7a19e5f5a66157612b7a1984e6e8072f3019ec4dce2ceddaf0824"
+  },
+  "id": "UR5q4l1kgRvCuSwX",
+  "tags": []
+}
