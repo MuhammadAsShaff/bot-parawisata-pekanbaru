@@ -14,6 +14,7 @@
   export let currentSessionId = '';
   export let onLoadChat = (id) => {};
   export let onDeleteChat = (id) => {};
+  export let onClearHistory = () => {};
   
   let activeMenuId = null;
 
@@ -80,6 +81,9 @@
   </div>
 
   <div class="mt-auto flex flex-col gap-1.5">
+    <Button variant="ghost" on:click={onClearHistory}>
+      <span class="text-sm text-red-400">🗑️ Clear All History</span>
+    </Button>
     <Button variant="ghost" on:click={onToggleMute}>
       <span class="text-sm">{isMuted ? '🔇 Unmute Voice' : '🔊 Mute Voice'}</span>
     </Button>

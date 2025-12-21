@@ -29,10 +29,20 @@
   // Session State
   let sessionId = '';
   let chatHistory = [];
+  let sessionExpiryTimer;
 
   // --- Methods ---
 
   const MAX_HISTORY = 50;
+
+  function resetSessionTimer() {
+      if (sessionExpiryTimer) clearTimeout(sessionExpiryTimer);
+      sessionExpiryTimer = setTimeout(() => {
+          initSession();
+          messages = [{ role: 'assistant', text: '⚠️ Sesi chat telah berakhir (15 menit). Memulai sesi baru.' }];
+          updateCurrentSession();
+      }, 15 * 60 * 1000); 
+  }
 
   function loadHistoryIndex() {
       try {
@@ -111,6 +121,8 @@
       messages = msgs;
       
       if (window.innerWidth < 768) isSidebarOpen = false;
+      
+      resetSessionTimer();
   }
 
   function initSession() {
@@ -118,6 +130,7 @@
     console.log('New Session ID:', sessionId);
     messages = [];
     // Don't save to history yet - wait for first message
+    resetSessionTimer();
   }
 
   function deleteChat(id) {
@@ -129,6 +142,18 @@
       if (sessionId === id) {
           initSession();
       }
+  }
+
+  function clearHistory() {
+      // Clear all sessions from storage
+      chatHistory.forEach(c => deleteSessionFromStorage(c.id));
+      
+      // Clear index
+      chatHistory = [];
+      saveHistoryIndex([]);
+      
+      // Reset current session
+      initSession();
   }
 
   function loadVoices() {
@@ -543,6 +568,7 @@
       currentSessionId={sessionId}
       onLoadChat={loadChat}
       onDeleteChat={deleteChat}
+      onClearHistory={clearHistory}
     />
     
     <!-- Overlay for mobile -->
