@@ -77,7 +77,13 @@
   {:else}
     <div class="flex flex-col gap-5 pb-20 md:pb-5 mt-5">
       {#each messages as msg}
-        <MessageBubble role={msg.role} text={msg.text} />
+        <MessageBubble 
+          role={msg.role} 
+          text={msg.text} 
+          animate={msg.animate} 
+          stopAnimation={msg.stopAnimation}
+          on:animationComplete 
+        />
       {/each}
       {#if isLoading}
          <MessageBubble role="assistant" isTyping={true} />

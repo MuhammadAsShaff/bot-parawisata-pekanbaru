@@ -16,6 +16,7 @@
   let inputText = '';
   let isLoading = false;
   let isListening = false;
+  let isTyping = false;
   let isMuted = false;
   let showSettings = false;
   
@@ -66,7 +67,8 @@
   function loadSessionFromStorage(id) {
       try {
           const data = localStorage.getItem(`chat_session_${id}`);
-          return data ? JSON.parse(data) : [];
+          // Ensure loaded messages do not animate again by setting animate: false
+          return data ? JSON.parse(data).map(m => ({ ...m, animate: false })) : [];
       } catch { return []; }
   }
 
@@ -512,14 +514,17 @@
     try {
       const result = await sendMessage(userMessage, sessionId);
       if (result && result.reply) {
-        messages = [...messages, { role: 'assistant', text: result.reply }];
+        messages = [...messages, { role: 'assistant', text: result.reply, animate: true }];
         speak(result.reply);
+        isTyping = true;
       } else {
-        messages = [...messages, { role: 'assistant', text: 'Maaf, saya belum mengerti.' }];
+        messages = [...messages, { role: 'assistant', text: 'Maaf, saya belum mengerti.', animate: true }];
+        isTyping = true;
       }
     } catch (e) {
       console.error(e);
-      messages = [...messages, { role: 'assistant', text: `Jaringan bermasalah: ${e.message || 'Tidak dapat terhubung ke server.'}` }];
+      messages = [...messages, { role: 'assistant', text: `Jaringan bermasalah: ${e.message || 'Tidak dapat terhubung ke server.'}`, animate: true }];
+      isTyping = true;
     } finally {
       updateCurrentSession(); // Save to history
       isLoading = false;
@@ -549,6 +554,21 @@
 
   function toggleSidebar() {
     isSidebarOpen = !isSidebarOpen;
+  }
+
+  function handleAnimationComplete() {
+    isTyping = false;
+  }
+
+  function handleStop() {
+    const lastIdx = messages.length - 1;
+    if (lastIdx >= 0 && messages[lastIdx].role === 'assistant') {
+        const newMsgs = [...messages];
+        // Stop animation for this message
+        newMsgs[lastIdx] = { ...newMsgs[lastIdx], stopAnimation: true };
+        messages = newMsgs;
+    }
+    isTyping = false;
   }
 </script>
 
@@ -610,6 +630,7 @@
       {isLoading} 
       bind:chatContainer
       onSuggestionClick={handleSuggestionClick}
+      on:animationComplete={handleAnimationComplete}
     />
   </div>
 
@@ -619,8 +640,10 @@
       bind:value={inputText}
       {isLoading}
       {isListening}
+      {isTyping}
       onSend={handleSend}
       onToggleListening={toggleListening}
+      onStop={handleStop}
     />
   </div>
 </MainLayout>

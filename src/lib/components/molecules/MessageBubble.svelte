@@ -1,9 +1,18 @@
 <script>
+  import { onMount, onDestroy, createEventDispatcher } from 'svelte';
   import Avatar from '../atoms/Avatar.svelte';
+
+  const dispatch = createEventDispatcher();
 
   export let role = 'user'; // 'user' | 'assistant'
   export let text = '';
   export let isTyping = false;
+  export let animate = false;
+  export let stopAnimation = false;
+
+  let visibleText = '';
+  let interval;
+  let showCursor = false;
 
   function parseMarkdown(input) {
     if (!input) return '';
@@ -30,7 +39,6 @@
           inList = false;
         }
         // Add <br> for newlines, but avoid extra breaks around lists if possible
-        // For simplicity, we preserve the original line breaks structure
         if (index > 0) output += '<br>';
         output += line;
       }
@@ -41,7 +49,62 @@
     return output;
   }
 
-  $: formattedText = parseMarkdown(text);
+  // Handle animation
+  onMount(() => {
+    if (role === 'assistant' && animate) {
+      if (stopAnimation) {
+          visibleText = text;
+          dispatch('animationComplete');
+          return;
+      }
+
+      visibleText = '';
+      showCursor = true;
+      let i = 0;
+      
+      interval = setInterval(() => {
+        if (i < text.length) {
+          visibleText += text.charAt(i);
+          i++;
+        } else {
+          endAnimation();
+        }
+      }, 15); // Adjust speed here (lower = faster)
+    } else {
+      visibleText = text;
+      // Dispatch complete only if it was supposed to be animated but skipped or finished
+      if (role === 'assistant') dispatch('animationComplete');
+    }
+  });
+
+  function endAnimation() {
+      if (interval) clearInterval(interval);
+      interval = null;
+      showCursor = false;
+      dispatch('animationComplete');
+  }
+
+  onDestroy(() => {
+    if (interval) clearInterval(interval);
+  });
+
+  // Watch stopAnimation
+  $: if (stopAnimation && interval) {
+      visibleText = text;
+      endAnimation();
+  }
+
+  // If text updates dynamically (not expected but safe to handle) or animation is disabled
+  $: if (!animate && role === 'assistant') {
+      visibleText = text;
+  }
+  
+  // For user messages, always show full text
+  $: if (role === 'user') {
+      visibleText = text;
+  }
+
+  $: formattedText = parseMarkdown(visibleText);
 </script>
 
 <div class="flex gap-[15px] max-w-full mb-5 {role === 'user' ? 'justify-end' : 'justify-start'}">
@@ -59,6 +122,9 @@
         Thinking...
       {:else}
         {@html formattedText}
+        {#if showCursor}
+          <span class="inline-block w-2 h-4 bg-gemini-text ml-1 align-middle animate-pulse"></span>
+        {/if}
       {/if}
     {/if}
   </div>
