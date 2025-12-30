@@ -69,7 +69,7 @@
         } else {
           endAnimation();
         }
-      }, 15); // Adjust speed here (lower = faster)
+      }, 5); // Adjust speed here (lower = faster)
     } else {
       visibleText = text;
       // Dispatch complete only if it was supposed to be animated but skipped or finished
