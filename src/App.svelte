@@ -26,6 +26,7 @@
   // Voice State
   let selectedVoice = null;
   let voiceList = [];
+  let voiceRetryCount = 0;
   
   // Session State
   let sessionId = '';
@@ -163,22 +164,39 @@
     
     let allVoices = window.speechSynthesis.getVoices();
     
+    // Retry if voices are not yet loaded (Chrome/Android quirk)
+    // Limit retries to avoid infinite loop
+    if (allVoices.length === 0) {
+        if (voiceRetryCount < 20) { // Retry for ~2 seconds
+             voiceRetryCount++;
+             setTimeout(loadVoices, 100);
+             return;
+        }
+    } else {
+        voiceRetryCount = 0;
+    }
+
     // Helper to check if voice is Indonesian
     const isIndonesian = (v) => v.lang === 'id-ID' || v.lang === 'id_ID' || v.lang.toLowerCase().includes('indones');
 
-    voiceList = allVoices.filter(isIndonesian);
+    // Filter for Indonesian voices
+    let indonesianVoices = allVoices.filter(isIndonesian);
 
-    // If no specific ID voice, fallback to all but try to prioritize somewhat (though less useful)
-    if (voiceList.length === 0) {
+    if (indonesianVoices.length > 0) {
+        voiceList = indonesianVoices;
+    } else {
         console.warn('No Indonesian voices found. Listing all available voices.');
         voiceList = allVoices; 
     }
 
-    if (!selectedVoice && voiceList.length > 0) {
-      // Prioritize "Google Bahasa Indonesia" or "Microsoft Gadis" or similar common ones
-      selectedVoice = voiceList.find(v => v.name === 'Google Bahasa Indonesia') || 
-                      voiceList.find(v => v.name.includes('Indonesia')) ||
-                      voiceList[0];
+    // If current selected voice is still in the new list, keep it.
+    const currentStillExists = selectedVoice && voiceList.find(v => v.name === selectedVoice.name);
+
+    if (!currentStillExists && voiceList.length > 0) {
+        // Prioritize specific high-quality voices if available
+        selectedVoice = voiceList.find(v => v.name === 'Google Bahasa Indonesia') || 
+                        voiceList.find(v => v.name.includes('Indonesia')) ||
+                        voiceList[0];
     }
   }
 
@@ -480,16 +498,47 @@
     handleSend();
   }
 
-  function speak(text) {
-    if (isMuted || !('speechSynthesis' in window)) return;
+  // --- Audio Unlock for Mobile ---
+  // Mobile browsers require a direct user interaction to "unlock" audio.
+  let audioUnlocked = false;
+  function unlockAudio() {
+      if (audioUnlocked || !('speechSynthesis' in window)) return;
+      
+      // Create a silent utterance to unlock the queue
+      const utterance = new SpeechSynthesisUtterance('');
+      utterance.volume = 0; // Silent
+      window.speechSynthesis.speak(utterance);
+      audioUnlocked = true;
+      console.log('Audio unlocked');
+  }
+
+  function speak(text, force = false) {
+    if ((isMuted && !force) || !('speechSynthesis' in window)) return;
+    
+    // Safety: try to reload voices if missing (e.g. browser cleared them)
+    if (voiceList.length === 0) loadVoices();
+
+    // Unlock on first speak attempt if not yet done (though usually better on click)
+    if (!audioUnlocked) unlockAudio();
+
     window.speechSynthesis.cancel();
     
     // Clean text
     const cleanText = text.replace(/[*#_]/g, ''); 
     
     const utterance = new SpeechSynthesisUtterance(cleanText);
-    utterance.lang = 'id-ID';
-    if (selectedVoice) utterance.voice = selectedVoice;
+    utterance.lang = 'id-ID'; // Default hint
+    
+    if (selectedVoice) {
+        utterance.voice = selectedVoice;
+        // Ensure lang matches voice to avoid silent failures on some browsers
+        utterance.lang = selectedVoice.lang; 
+    }
+    
+    // Mobile quirk: sometimes utterance gets garbage collected if not held
+    // window.currentUtterance = utterance; 
+    
+    utterance.onerror = (e) => console.error('Speech Error:', e);
     
     window.speechSynthesis.speak(utterance);
   }
@@ -499,6 +548,9 @@
   async function handleSend() {
     if (!inputText.trim()) return;
     if (isLoading) return;
+
+    // Mobile: Unlock audio context immediately on interaction
+    unlockAudio();
 
     const userMessage = inputText;
     messages = [...messages, { role: 'user', text: userMessage }];
@@ -589,6 +641,8 @@
       onLoadChat={loadChat}
       onDeleteChat={deleteChat}
       onClearHistory={clearHistory}
+      on:reloadVoices={loadVoices}
+      on:testVoice={() => speak('Halo, ini adalah tes suara.', true)}
     />
     
     <!-- Overlay for mobile -->

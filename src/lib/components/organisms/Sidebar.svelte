@@ -1,6 +1,9 @@
 <script>
+  import { createEventDispatcher } from 'svelte';
   import Button from '../atoms/Button.svelte';
   import Icon from '../atoms/Icon.svelte';
+
+  const dispatch = createEventDispatcher();
 
   export let onNewChat;
   export let onToggleMute;
@@ -92,13 +95,29 @@
     </Button>
     
     {#if showSettings}
-      <div class="p-2.5 bg-gemini-hover rounded-[10px]">
-        <label for="voice-select" class="block text-xs mb-1 text-gemini-text-muted">Voice:</label>
-        <select id="voice-select" bind:value={selectedVoice} class="w-full bg-gemini-bg text-gemini-text border-none p-2 rounded-[5px] text-sm focus:outline-none focus:ring-1 focus:ring-gemini-text-muted">
-          {#each voiceList as voice}
-            <option value={voice}>{voice.name}</option>
-          {/each}
-        </select>
+      <div class="p-2.5 bg-gemini-hover rounded-[10px] flex flex-col gap-2">
+        <div>
+            <label for="voice-select" class="block text-xs mb-1 text-gemini-text-muted">Voice:</label>
+            <div class="flex gap-1">
+                <select id="voice-select" bind:value={selectedVoice} class="flex-1 bg-gemini-bg text-gemini-text border-none p-2 rounded-[5px] text-sm focus:outline-none focus:ring-1 focus:ring-gemini-text-muted min-w-0">
+                {#if voiceList.length === 0}
+                    <option value={null}>Loading voices...</option>
+                {:else}
+                    {#each voiceList as voice}
+                    <option value={voice}>{voice.name}</option>
+                    {/each}
+                {/if}
+                </select>
+                <!-- Refresh Button -->
+                <button class="p-2 bg-gemini-bg rounded-[5px] text-gemini-text hover:bg-white/10" on:click={() => dispatch('reloadVoices')} title="Refresh Voice List">
+                    <Icon path="M17.65 6.35A7.958 7.958 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z" size="14" />
+                </button>
+            </div>
+        </div>
+        
+        <button class="w-full py-1.5 bg-gemini-bg rounded-[5px] text-xs font-medium hover:bg-white/10 transition-colors flex items-center justify-center gap-2" on:click={() => dispatch('testVoice')}>
+            <span>🔊 Test Voice</span>
+        </button>
       </div>
     {/if}
   </div>
