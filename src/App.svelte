@@ -40,9 +40,14 @@
   function resetSessionTimer() {
       if (sessionExpiryTimer) clearTimeout(sessionExpiryTimer);
       sessionExpiryTimer = setTimeout(() => {
-          initSession();
-          messages = [{ role: 'assistant', text: '⚠️ Sesi chat telah berakhir (15 menit). Memulai sesi baru.' }];
+          // 1. Append message to CURRENT/OLD Session
+          messages = [...messages, { role: 'assistant', text: '⚠️ Sesi chat telah berakhir (15 menit). Memulai sesi baru.' }];
+          
+          // 2. Save the OLD session with the notification
           updateCurrentSession();
+          
+          // 3. Start FRESH session (clean slate)
+          initSession();
       }, 15 * 60 * 1000); 
   }
 
@@ -125,7 +130,7 @@
       
       if (window.innerWidth < 768) isSidebarOpen = false;
       
-      resetSessionTimer();
+      // resetSessionTimer(); // Removed: Timer should not start on load
   }
 
   function initSession() {
@@ -133,7 +138,7 @@
     console.log('New Session ID:', sessionId);
     messages = [];
     // Don't save to history yet - wait for first message
-    resetSessionTimer();
+    // resetSessionTimer(); // Removed: Timer should not start on init
   }
 
   function deleteChat(id) {
@@ -547,6 +552,9 @@
 
   async function handleSend() {
     if (!inputText.trim()) return;
+    
+    // Start/Reset 15-minute timer on interaction
+    resetSessionTimer();
     if (isLoading) return;
 
     // Mobile: Unlock audio context immediately on interaction

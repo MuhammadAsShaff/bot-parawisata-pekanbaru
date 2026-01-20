@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "promt",
+			"name": "prompt",
 			"request": {
 				"method": "POST",
 				"header": [],
