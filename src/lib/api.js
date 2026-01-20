@@ -1,6 +1,6 @@
 export async function sendMessage(message, sessionId) {
   try {
-    const response = await fetch('https://deeplearning.pcr.ac.id/webhook/kantin-pcr-chat', {
+    const response = await fetch('https://deeplearning.pcr.ac.id/webhook/bot-parawisata-pekanbaru', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

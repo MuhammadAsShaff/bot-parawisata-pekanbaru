@@ -1,6 +1,6 @@
-# Bot Kantin PCR (Frontend)
+# SiPekan (Frontend)
 
-Project ini adalah antarmuka frontend untuk **Bot Kantin PCR**, sebuah aplikasi web cerdas yang memungkinkan pengguna berinteraksi dengan layanan kantin menggunakan teks maupun suara.
+Project ini adalah antarmuka frontend untuk **SiPekan**, sebuah aplikasi web cerdas yang memungkinkan pengguna berinteraksi dengan layanan informasi pariwisata di Pekanbaru menggunakan teks maupun suara.
 
 Aplikasi ini dibangun menggunakan teknologi web modern, integrasi AI canggih, dan backend berbasis workflow n8n.
 
@@ -11,7 +11,7 @@ Aplikasi ini dibangun menggunakan teknologi web modern, integrasi AI canggih, da
     -   **Voice-to-Text**: Input suara dikonversi menjadi teks secara lokal menggunakan **Whisper AI (WASM)**.
     -   **Text-to-Voice (TTS)**: Bot dapat membacakan balasan teks dengan suara Bahasa Indonesia yang natural.
     -   **Voice-to-Voice**: Percakapan langsung dua arah dengan bot menggunakan suara tanpa perlu mengetik.
--   **Kecerdasan Buatan (LLM)**: Didukung oleh model **Google Gemini 2.5 Flash** yang sangat cepat dan akurat dalam memahami konteks percakapan serta data menu kantin.
+-   **Kecerdasan Buatan (LLM)**: Didukung oleh model **Google Gemini 2.5 Flash** yang sangat cepat dan akurat dalam memahami konteks percakapan serta data pariwisata Pekanbaru.
 -   **Antarmuka Modern & Responsif**:
     -   **Dynamic Island Status**: Indikator status visual (merekam, memproses, memuat) yang interaktif dan elegan.
     -   **Manajemen Riwayat Chat**: Fitur penyimpanan riwayat percakapan persisten, hapus sesi, dan "New Chat".
@@ -35,9 +35,9 @@ Aplikasi ini dibangun menggunakan teknologi web modern, integrasi AI canggih, da
 
 ```
 /
-├── backend/            # Resource terkait backend (n8n workflows, data menu JSON/CSV)
-│   ├── MLOPS.postman_collection.json  # Dokumentasi API / Testing
-│   └── BotKantinPCR.json              # Workflow n8n (Schema & Logic)
+├── backend/            # Resource terkait backend (n8n workflows, data wisata JSON/CSV)
+│   ├── bot parawisata.postman_collection.json  # Dokumentasi API / Testing
+│   └── BotParawisataPekanbaru.json             # Workflow n8n (Schema & Logic)
 ├── public/             # Aset statis & Model Cache
 ├── src/                # Kode sumber aplikasi frontend
 │   ├── lib/            # Komponen Svelte, utilitas, dan worker
@@ -86,11 +86,11 @@ File hasil build akan berada di folder `dist/`.
 
 Sistem backend menggunakan **n8n** sebagai orchestrator utama yang menghubungkan:
 1.  Input dari Frontend (Teks/Suara terjemahan).
-2.  Pengambilan Data Menu (Live Fetch dari Google Sheets/CSV).
+2.  Pengambilan Data Wisata (Live Fetch dari Google Sheets/CSV).
 3.  Pemrosesan LLM (**Gemini 2.5 Flash**).
 4.  Respon kembali ke Frontend.
 
-File workflow n8n tersedia di folder `backend/BotKantinPCR.json` yang dapat di-import langsung ke instance n8n Anda.
+File workflow n8n tersedia di folder `backend/BotParawisataPekanbaru.json` yang dapat di-import langsung ke instance n8n Anda.
 
 ## 📝 Catatan Tambahan
 

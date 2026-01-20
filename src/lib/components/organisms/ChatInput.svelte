@@ -70,6 +70,6 @@
     </div>
   </div>
   <div class="text-center text-[10px] md:text-[11px] text-gemini-text-muted mt-2 md:mt-2.5">
-    &copy; Kelompok Wortel
+    &copy; Muhammad As Shaff
   </div>
 </div>

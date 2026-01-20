@@ -1,19 +1,19 @@
 {
 	"info": {
-		"_postman_id": "3751b273-920c-4b0b-9aef-a2b40964bce8",
-		"name": "MLOPS",
+		"_postman_id": "7397beca-1b36-413e-bb5e-0bebc6c479fd",
+		"name": "bot parawisata",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "29695453"
 	},
 	"item": [
 		{
-			"name": "prompt",
+			"name": "promt",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"message\":\"apa fakta menarik dari kantin pcr?\",\"sessionId\":\"u0\"}\r\n",
+					"raw": "{\"message\":\"sebutkan parawisata yang ada di pekanbaru\",\"sessionId\":\"u3\"}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -21,7 +21,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://deeplearning.pcr.ac.id/webhook/kantin-pcr-chat",
+					"raw": "https://deeplearning.pcr.ac.id/webhook-test/bot-parawisata-pekanbaru",
 					"protocol": "https",
 					"host": [
 						"deeplearning",
@@ -30,8 +30,8 @@
 						"id"
 					],
 					"path": [
-						"webhook",
-						"kantin-pcr-chat"
+						"webhook-test",
+						"bot-parawisata-pekanbaru"
 					]
 				}
 			},

@@ -17,60 +17,60 @@
     <div class="flex-1 flex flex-col justify-center items-start pb-5 w-full">
       <!-- Mobile Greeting -->
       <div class="mb-6 w-full md:hidden">
-        <h1 class="text-xl text-gemini-text-muted font-medium mb-1">Hi, Sobat PCR</h1>
-        <h2 class="text-4xl text-gemini-text font-medium leading-tight">Mau mulai dari mana?</h2>
+        <h1 class="text-xl text-gemini-text-muted font-medium mb-1">Hi, Sobat Wisata</h1>
+        <h2 class="text-4xl text-gemini-text font-medium leading-tight">Mau wisata ke mana?</h2>
       </div>
 
       <!-- Desktop Greeting -->
       <div class="hidden md:block mb-12 w-full pr-2 break-words overflow-hidden">
-        <h1 class="text-[56px] m-0 leading-tight bg-gradient-to-r from-gemini-blue via-gemini-purple to-gemini-red bg-clip-text text-transparent font-medium break-all sm:break-words w-full">Halo, Sobat PCR</h1>
-        <h2 class="text-[56px] m-0 leading-tight text-[#444746] font-medium mt-0 break-all sm:break-words w-full">Mau cari makan apa hari ini?</h2>
+        <h1 class="text-[56px] m-0 leading-tight bg-gradient-to-r from-gemini-blue via-gemini-purple to-gemini-red bg-clip-text text-transparent font-medium break-all sm:break-words w-full">Halo, Sobat Wisata</h1>
+        <h2 class="text-[56px] m-0 leading-tight text-[#444746] font-medium mt-0 break-all sm:break-words w-full">Mau wisata ke mana hari ini?</h2>
       </div>
 
       <!-- Mobile Suggestions (Vertical Pills) -->
       <div class="flex flex-col items-start gap-3 w-full md:hidden">
         <SuggestionCard 
           mobilePill={true}
-          text="Cari makanan enak" 
-          icon="🍔" 
-          on:click={() => onSuggestionClick('Rekomendasi makanan enak di Kantin PCR')}
+          text="Rekomendasi wisata" 
+          icon="🗺️" 
+          on:click={() => onSuggestionClick('Rekomendasi tempat wisata menarik di Pekanbaru')}
         />
         <SuggestionCard 
           mobilePill={true}
-          text="Jam buka kantin" 
-          icon="🕒" 
-          on:click={() => onSuggestionClick('Jam buka kantin hari ini')}
+          text="Event Pekanbaru" 
+          icon="🎉" 
+          on:click={() => onSuggestionClick('Info event menarik di Pekanbaru')}
         />
         <SuggestionCard 
           mobilePill={true}
-          text="Menu vegetarian" 
-          icon="🥗" 
-          on:click={() => onSuggestionClick('Apakah ada menu vegetarian?')}
+          text="Kuliner Khas" 
+          icon="🍜" 
+          on:click={() => onSuggestionClick('Rekomendasi kuliner khas Pekanbaru')}
         />
         <SuggestionCard 
           mobilePill={true}
-          text="Bantu saya belajar" 
-          icon="🎓" 
-          on:click={() => onSuggestionClick('Bantu saya belajar materi kuliah')}
+          text="Hotel terdekat" 
+          icon="🏨" 
+          on:click={() => onSuggestionClick('Rekomendasi hotel terdekat')}
         />
       </div>
 
       <!-- Desktop Suggestions (Horizontal Cards) -->
       <div class="hidden md:flex gap-[15px] overflow-x-auto w-full pb-2 snap-x snap-mandatory hide-scrollbar pr-5">
         <SuggestionCard 
-          text="Rekomendasi makanan enak di Kantin PCR" 
-          icon="🍔" 
-          on:click={() => onSuggestionClick('Rekomendasi makanan enak di Kantin PCR')}
+          text="Rekomendasi tempat wisata menarik di Pekanbaru" 
+          icon="🗺️" 
+          on:click={() => onSuggestionClick('Rekomendasi tempat wisata menarik di Pekanbaru')}
         />
         <SuggestionCard 
-          text="Jam buka kantin hari ini" 
-          icon="🕒" 
-          on:click={() => onSuggestionClick('Jam buka kantin hari ini')}
+          text="Info event menarik di Pekanbaru" 
+          icon="🎉" 
+          on:click={() => onSuggestionClick('Info event menarik di Pekanbaru')}
         />
         <SuggestionCard 
-          text="Apakah ada menu vegetarian?" 
-          icon="🥗" 
-          on:click={() => onSuggestionClick('Apakah ada menu vegetarian?')}
+          text="Rekomendasi kuliner khas Pekanbaru" 
+          icon="🍜" 
+          on:click={() => onSuggestionClick('Rekomendasi kuliner khas Pekanbaru')}
         />
       </div>
     </div>
