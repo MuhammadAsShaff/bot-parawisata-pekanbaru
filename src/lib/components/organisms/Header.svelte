@@ -49,7 +49,7 @@
         <span class="px-2 py-1 bg-blue-500/10 text-blue-400 text-xs rounded-md border border-blue-500/20">Svelte 5</span>
         <span class="px-2 py-1 bg-cyan-500/10 text-cyan-400 text-xs rounded-md border border-cyan-500/20">Tailwind CSS</span>
         <span class="px-2 py-1 bg-purple-500/10 text-purple-400 text-xs rounded-md border border-purple-500/20">Gemini 2.5 Flash</span>
-        <span class="px-2 py-1 bg-emerald-500/10 text-emerald-400 text-xs rounded-md border border-emerald-500/20">Whisper AI (WASM)</span>
+        <span class="px-2 py-1 bg-emerald-500/10 text-emerald-400 text-xs rounded-md border border-emerald-500/20">Web Speech API</span>
         <span class="px-2 py-1 bg-orange-500/10 text-orange-400 text-xs rounded-md border border-orange-500/20">n8n Workflow</span>
       </div>
     </div>

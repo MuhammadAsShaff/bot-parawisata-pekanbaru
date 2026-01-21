@@ -15,13 +15,14 @@
   let messages = [];
   let inputText = '';
   let isLoading = false;
-  let isListening = false;
+
   let isTyping = false;
   let isMuted = false;
   let showSettings = false;
   
   let chatContainer; // Bound to ChatWindow
-  let recognition;
+  let textBeforeRecording = ''; // Context buffer for appending
+
   
   // Voice State
   let selectedVoice = null;
@@ -210,16 +211,10 @@
   let statusMessage = ''; // Debug status
 
   // --- Whisper WASM State ---
-  let whisperWorker = null;
+  // --- Web Speech API State ---
   let isRecording = false;
-  let audioContext = null;
-  let mediaStream = null;
-  let audioInput = null;
-  let processor = null;
-  let audioChunks = [];
-  let isModelReady = false;
-  let isModelLoading = false;
-  let pendingRecording = false;
+  let recognition = null;
+  let isThinking = false;
 
   onMount(() => {
      if (window.innerWidth < 768) isSidebarOpen = false;
@@ -273,219 +268,86 @@
     loadVoices();
     if ('speechSynthesis' in window) speechSynthesis.onvoiceschanged = loadVoices;
 
-    // Initialize Whisper Worker with cache burst to load new online config
-    whisperWorker = new Worker(new URL('./lib/whisper-worker.js?v=online_final', import.meta.url), { type: 'module' });
-    
-    whisperWorker.onmessage = (e) => {
-        const { status, message, text } = e.data;
-        if (status === 'loading') {
-            statusMessage = `⏳ ${message}`;
-        } else if (status === 'ready') {
-            statusMessage = ''; // Ready silently
-            console.log('Whisper Ready');
-            isModelReady = true;
-            isModelLoading = false;
-            if (pendingRecording) {
-                pendingRecording = false;
-                startRecording();
+    // Initialize Web Speech API
+    // let textBeforeRecording = ''; // Moved to top level
+
+    const SpeechRecognition = window['SpeechRecognition'] || window['webkitSpeechRecognition'];
+    if (SpeechRecognition) {
+        recognition = new SpeechRecognition();
+        recognition.lang = 'id-ID';
+        // Standard single-shot mode is much more stable than continuous for V1
+        recognition.continuous = false; 
+        recognition.interimResults = true;
+
+        recognition.onstart = () => {
+             isRecording = true;
+             statusMessage = '🎙️ Mendengarkan...';
+        };
+
+        recognition.onend = () => {
+             console.log('Speech recognition ended.');
+             isRecording = false;
+             if (!isThinking && !isLoading) statusMessage = '';
+        };
+
+        recognition.onresult = (event) => {
+            let interimAndFinal = '';
+            for (let i = event.resultIndex; i < event.results.length; ++i) {
+                interimAndFinal += event.results[i][0].transcript;
             }
-        } else if (status === 'downloading') {
-            const { detail } = e.data;
-            if (detail && detail.progress) {
-                 const percent = Math.round(detail.progress);
-                 statusMessage = `⏳ Mengunduh Model... ${percent}%`;
+            
+            // In single-shot mode (continuous=false), we just update the input
+            // textBeforeRecording is set when we START listening
+            inputText = textBeforeRecording + interimAndFinal;
+            
+            // If final, we are essentially done in single-shot mode
+            if (event.results[0].isFinal) {
+                 statusMessage = '✅ Selesai.';
             }
-        } else if (status === 'processing') {
-            statusMessage = `🧠 ${message}`;
-        } else if (status === 'complete') {
-            statusMessage = '';
-            inputText = text ? text.trim() : '';
-            console.log('Whisper Result:', inputText);
-            if (inputText) {
-                // Auto-send removed to allow user to review input
-                // setTimeout(() => handleSend(), 500);
-            } else {
-                 statusMessage = '❌ Tidak ada kata yang terdengar.';
-            }
-        } else if (status === 'error') {
-            statusMessage = `❌ ${message}`;
-            isRecording = false;
-        }
-    };
-    
-    // Lazy Load: Do NOT trigger load immediately
-    // whisperWorker.postMessage({ type: 'load' });
+        };
+
+        recognition.onerror = (event) => {
+             console.error('Speech Error:', event.error);
+             isRecording = false;
+             statusMessage = `❌ Error: ${event.error}`;
+        };
+    } else {
+        console.warn('Web Speech API not supported in this browser.');
+    }
 
     return () => {
-        if (whisperWorker) whisperWorker.terminate();
-        stopAudioCapture();
+        if (recognition) recognition.abort();
     };
   });
 
-  async function startRecording() {
-      statusMessage = 'Menyiapkan mikrofon...';
-      audioChunks = [];
-      try {
-          // Advanced Audio Constraints for Clearer Input
-          mediaStream = await navigator.mediaDevices.getUserMedia({ 
-              audio: {
-                  channelCount: 1,
-                  echoCancellation: true,
-                  noiseSuppression: true,
-                  autoGainControl: true,
-              } 
-          });
-          
-          // Force 16kHz sample rate for Whisper
-          const AudioContext = window.AudioContext || window['webkitAudioContext'];
-          audioContext = new AudioContext({ sampleRate: 16000 });
-          
-          audioInput = audioContext.createMediaStreamSource(mediaStream);
-          
-          // Use ScriptProcessor for capture (simple buffer collection)
-          // Buffer size 4096 = ~0.25s latancy
-          processor = audioContext.createScriptProcessor(4096, 1, 1);
-          
-          processor.onaudioprocess = (e) => {
-              if (!isRecording) return;
-              const inputData = e.inputBuffer.getChannelData(0);
-              // Clone data because inputBuffer is reused
-              audioChunks.push(new Float32Array(inputData));
-          };
-          
-          audioInput.connect(processor);
-          processor.connect(audioContext.destination);
-          
-          isRecording = true;
-          statusMessage = '🎙️ Merekam... (Klik lagi untuk stop)';
-          
-      } catch (err) {
-          console.error(err);
-          statusMessage = '❌ Gagal akses mikrofon: ' + err.message;
-      }
-  }
-
-  function stopAudioCapture() {
-      if (processor && audioInput) {
-          audioInput.disconnect();
-          processor.disconnect();
-      }
-      if (mediaStream) {
-          mediaStream.getTracks().forEach(track => track.stop());
-      }
-      if (audioContext) {
-          audioContext.close();
-      }
-      
-      processor = null;
-      audioInput = null;
-      mediaStream = null;
-      audioContext = null;
-  }
-
-  async function stopRecording() {
-      // Capture sample rate before closing context
-      const currentSampleRate = audioContext ? audioContext.sampleRate : 16000;
-
-      isRecording = false;
-      stopAudioCapture();
-      
-      if (audioChunks.length === 0) {
-          statusMessage = '❌ Audio kosong.';
-          return;
-      }
-      
-      statusMessage = 'Memproses audio...';
-      
-      // Flatten chunks into single Float32Array for worker
-      const totalLength = audioChunks.reduce((acc, chunk) => acc + chunk.length, 0);
-      let audioData = new Float32Array(totalLength);
-      let offset = 0;
-      for (const chunk of audioChunks) {
-          audioData.set(chunk, offset);
-          offset += chunk.length;
-      }
-
-      // Resample to 16000Hz using OfflineAudioContext
-      if (currentSampleRate !== 16000) {
-          console.log(`Resampling from ${currentSampleRate} to 16000Hz using OfflineAudioContext...`);
-          audioData = await resampleTo16k(audioData, currentSampleRate);
-      } else {
-        // Even if sample rate is same, we might want to normalize
-        // But usually we just proceed.
-      }
-
-      // Normalize Audio (Boost volume)
-      console.log('Normalizing audio...');
-      audioData = normalizeAudio(audioData);
-      
-      // Send to worker
-      whisperWorker.postMessage({
-          type: 'transcribe',
-          audio: audioData
-      });
-  }
-
-  async function resampleTo16k(audioData, origSampleRate) {
-      if (origSampleRate === 16000) return audioData;
-      
-      try {
-          // Use OfflineAudioContext for high-quality resampling
-          const newLength = Math.round(audioData.length * 16000 / origSampleRate);
-          const offlineCtx = new OfflineAudioContext(1, newLength, 16000);
-          const buffer = offlineCtx.createBuffer(1, audioData.length, origSampleRate);
-          buffer.copyToChannel(audioData, 0);
-          
-          const source = offlineCtx.createBufferSource();
-          source.buffer = buffer;
-          source.connect(offlineCtx.destination);
-          source.start();
-          
-          const renderedBuffer = await offlineCtx.startRendering();
-          return renderedBuffer.getChannelData(0);
-      } catch (e) {
-          console.error("Resampling failed, falling back to simple method", e);
-          // Fallback if OfflineAudioContext fails (rare)
-          // ... (simple linear interpolation fallback could go here, but let's just return original and hope)
-          return audioData;
-      }
-  }
-
-  function normalizeAudio(audioData) {
-      let maxVal = 0;
-      for (let i = 0; i < audioData.length; i++) {
-          if (Math.abs(audioData[i]) > maxVal) {
-              maxVal = Math.abs(audioData[i]);
-          }
-      }
-      
-      if (maxVal === 0) return audioData; // Avoid division by zero
-      
-      const multiplier = 0.95 / maxVal; // Boost to 95% max amplitude
-      const newData = new Float32Array(audioData.length);
-      
-      for (let i = 0; i < newData.length; i++) {
-          newData[i] = audioData[i] * multiplier;
-      }
-      
-      return newData;
-  }
 
   function toggleListening() {
+    if (!recognition) {
+        alert('Browser Anda tidak mendukung fitur Voice Input (Web Speech API). Gunakan Chrome/Edge.');
+        return;
+    }
+
     if (isRecording) {
-        stopRecording();
+        recognition.stop();
+        isRecording = false;
+        statusMessage = ''; 
     } else {
-        if (!isModelReady) {
-            if (!isModelLoading) {
-                isModelLoading = true;
-                pendingRecording = true;
-                whisperWorker.postMessage({ type: 'load' });
-            } else {
-                statusMessage = '⏳ Sedang memuat model...';
-            }
-            return;
+        // Reset context
+        if (!inputText || !inputText.trim()) {
+            textBeforeRecording = '';
+        } else {
+            textBeforeRecording = inputText + (inputText.endsWith(' ') ? '' : ' ');
         }
-        startRecording();
+        
+        try {
+            recognition.start();
+            isRecording = true;
+            statusMessage = '🎙️ Listening...';
+        } catch (e) {
+            console.error('Failed to start recording:', e);
+            statusMessage = '❌ Gagal memulai.';
+            isRecording = false; // rollback
+        }
     }
   }
 
@@ -674,7 +536,7 @@
            <!-- Spinner or Icon based on message -->
            {#if statusMessage.includes('memuat') || statusMessage.includes('Mengunduh')}
                <div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-           {:else if statusMessage.includes('Merekam')}
+           {:else if statusMessage.includes('Merekam') || statusMessage.includes('Mendengarkan')}
                <div class="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
            {:else if statusMessage.includes('Menganalisis')}
                <div class="w-4 h-4 text-xs">✨</div>
@@ -701,7 +563,7 @@
       bind:this={chatInputComponent}
       bind:value={inputText}
       {isLoading}
-      {isListening}
+      isListening={isRecording}
       {isTyping}
       onSend={handleSend}
       onToggleListening={toggleListening}
