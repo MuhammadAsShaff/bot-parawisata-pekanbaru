@@ -42,6 +42,40 @@
       </p>
     </div>
 
+    <!-- Tech Stack -->
+    <div>
+      <h3 class="text-white text-lg font-medium mb-2">Tech Stack</h3>
+      <div class="flex flex-wrap gap-2">
+        <span class="px-2 py-1 bg-blue-500/10 text-blue-400 text-xs rounded-md border border-blue-500/20">Svelte 5</span>
+        <span class="px-2 py-1 bg-cyan-500/10 text-cyan-400 text-xs rounded-md border border-cyan-500/20">Tailwind CSS</span>
+        <span class="px-2 py-1 bg-purple-500/10 text-purple-400 text-xs rounded-md border border-purple-500/20">Gemini 2.5 Flash</span>
+        <span class="px-2 py-1 bg-emerald-500/10 text-emerald-400 text-xs rounded-md border border-emerald-500/20">Whisper AI (WASM)</span>
+        <span class="px-2 py-1 bg-orange-500/10 text-orange-400 text-xs rounded-md border border-orange-500/20">n8n Workflow</span>
+      </div>
+    </div>
+
+    <!-- Data Source -->
+    <div>
+      <h3 class="text-white text-lg font-medium mb-2">Sumber Data</h3>
+      <a 
+        href="https://smarttourism.pekanbaru.go.id" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        class="block p-3 bg-gemini-sidebar hover:bg-gemini-hover border border-white/5 rounded-xl transition-all group"
+      >
+        <div class="flex items-center gap-3">
+          <div class="p-2 bg-white/5 rounded-lg group-hover:bg-white/10 transition-colors">
+            <Icon path="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z" className="text-blue-400" />
+          </div>
+          <div class="flex-1 min-w-0">
+             <div class="text-sm text-gemini-text-muted">Website Resmi</div>
+             <div class="text-white font-medium truncate group-hover:underline">Smart Tourism Pekanbaru</div>
+          </div>
+          <Icon path="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" className="text-gemini-text-muted/50 w-5 h-5 shrink-0" />
+        </div>
+      </a>
+    </div>
+
     <!-- Team Info -->
     <div>
       <h3 class="text-white text-lg font-medium mb-3">Credits</h3>
