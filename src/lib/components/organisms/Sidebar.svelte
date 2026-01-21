@@ -43,7 +43,7 @@
     <span class="text-sm font-medium">New chat</span>
   </div>
 
-  <div class="flex-1 overflow-y-auto flex flex-col gap-1 mt-2 pb-2" on:mouseleave={() => activeMenuId = null}>
+  <div class="flex-1 overflow-y-auto flex flex-col gap-1 mt-2 pb-2" role="group" on:mouseleave={() => activeMenuId = null}>
     {#if chatHistory.length > 0}
       <div class="px-4 py-2 text-xs font-medium text-gemini-text-muted">Recent</div>
       {#each chatHistory as chat}
@@ -76,7 +76,7 @@
                     </button>
                 </div>
                 <!-- Backdrop to close -->
-                <div class="fixed inset-0 z-40" on:click|stopPropagation={() => activeMenuId = null}></div>
+                <div class="fixed inset-0 z-40" on:click|stopPropagation={() => activeMenuId = null} role="button" tabindex="0" on:keydown={(e) => e.key === 'Escape' && (activeMenuId = null)}></div>
             {/if}
         </div>
       {/each}

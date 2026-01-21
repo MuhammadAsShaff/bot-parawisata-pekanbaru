@@ -45,7 +45,7 @@
         active={isListening} 
         on:click={onToggleListening} 
         title="Voice Input"
-        className="!p-1.5 md:!p-2.5 {isListening ? 'mic-active' : ''}"
+        className="!p-3 md:!p-2.5 {isListening ? 'mic-active' : ''}"
         disabled={isTyping} 
       >
         {#if isListening}
@@ -58,12 +58,12 @@
       </Button>
 
       {#if isTyping}
-         <Button variant="icon" className="!bg-gemini-text !text-gemini-bg !p-1.5 md:!p-2.5 rounded-full" on:click={onStop} title="Stop Generation">
+         <Button variant="icon" className="!bg-gemini-text !text-gemini-bg !p-3 md:!p-2.5 rounded-full" on:click={onStop} title="Stop Generation">
              <!-- Square Stop Icon -->
              <div class="w-3 h-3 bg-current rounded-[2px]"></div>
          </Button>
       {:else if value.trim()}
-         <Button variant="icon" className="!text-[#2ed573] !p-1.5 md:!p-2.5" on:click={onSend}>
+         <Button variant="icon" className="!text-[#2ed573] !p-3 md:!p-2.5" on:click={onSend}>
              <Icon path="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
          </Button>
       {/if}

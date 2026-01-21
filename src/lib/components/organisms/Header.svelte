@@ -13,8 +13,8 @@
 <header class="flex justify-between items-center p-3 md:p-5">
   <div class="text-lg md:text-[22px] text-gemini-text flex items-center gap-2">
     <!-- Menu Toggle: Visible on mobile, OR on desktop if sidebar is CLOSED -->
-    <div class="{isSidebarOpen ? 'md:hidden' : 'block'}">
-      <Button variant="icon" on:click={onToggleSidebar}>
+    <div class="{isSidebarOpen ? 'md:hidden' : 'block'} -ml-2">
+      <Button variant="icon" on:click={onToggleSidebar} className="!p-3">
         <Icon path="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
       </Button>
     </div>
@@ -24,7 +24,7 @@
   
   <!-- User Profile / About Trigger -->
   <button 
-    class="user-profile outline-none rounded-full transition-transform active:scale-95 focus:ring-2 focus:ring-white/20"
+    class="user-profile outline-none rounded-full transition-transform active:scale-95 focus:ring-2 focus:ring-white/20 p-1 -mr-1"
     on:click={() => showAboutModal = true}
     aria-label="About Project"
   >

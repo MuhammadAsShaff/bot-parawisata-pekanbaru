@@ -7,7 +7,7 @@
 {#if mobilePill}
   <!-- Pill Style for Mobile -->
   <div 
-    class="bg-gemini-sidebar hover:bg-[#333537] rounded-full px-5 py-2.5 flex items-center gap-3 cursor-pointer transition-colors w-fit border border-transparent active:border-gemini-border"
+    class="bg-gemini-sidebar hover:bg-[#333537] rounded-full px-5 py-3.5 flex items-center gap-3 cursor-pointer transition-colors w-fit border border-transparent active:border-gemini-border"
     on:click
     role="button"
     tabindex="0"
